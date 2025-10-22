@@ -1,0 +1,31 @@
+az:
+
+Install-Module -Name Az -AllowClobber -Scope CurrentUser
+
+Import-Module Az
+
+Connect-AzAccount
+
+Get-AzSubscription
+
+Set-AzContext -Subscription "18a54fef-d36d-4d1c-b7b4-c468a773149b"
+
+az account list --output table
+
+=============================================================
+Terraform:
+
+terraform init
+
+terraform fmt
+terraform validate
+
+terraform plan
+
+terraform apply -auto-approve
+
+terraform state list
+terraform state rm 'RESOURCE_NAME'
+
+terraform apply "-target=azurerm_key_vault.main" "-target=azurerm_key_vault_access_policy.self"
+secret Name: vm-locadmin-pass

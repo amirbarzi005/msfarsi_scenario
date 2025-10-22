@@ -1,0 +1,33 @@
+
+
+
+
+terraform init
+
+terraform fmt
+terraform validate
+
+terraform plan
+
+terraform apply -auto-approve
+
+terraform state list
+terraform state rm 'RESOURCE_NAME'
+
+terraform apply -auto-approve "-target=azurerm_key_vault.main" "-target=azurerm_key_vault_access_policy.self"
+secret Name: vm-locadmin-pass
+
+
+
+terraform destroy -target='azurerm_windows_virtual_machine.vms[*]' -target='azurerm_network_interface.vm_nics[*]' -target='azurerm_public_ip.*' -target='azurerm_lb.*' -target='azurerm_lb_backend_address_pool.*' -target='azurerm_lb_probe.*' -target='azurerm_lb_rule.*' -target='azurerm_network_interface_backend_address_pool_association.*' -target='azurerm_network_security_rule.*' -target='azurerm_subnet_network_security_group_association.*' -target='azurerm_network_security_group.*' -target='azurerm_subnet.*' -target='azurerm_virtual_network.*' -target='azurerm_key_vault_access_policy.*' -target='azurerm_key_vault.*' -target='azurerm_key_vault_secret.*'
+
+
+
+
+az vm run-command invoke --resource-group rg-abarzi-sch --name vm-web1-demo --command-id RunPowerShellScript --scripts "Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False"
+
+
+az vm run-command invoke --resource-group rg-abarzi-sch --name vm-web1-demo --command-id RunPowerShellScript --scripts "Install-WindowsFeature -Name Web-Server,Web-Mgmt-Console -IncludeManagementTools"
+
+az vm run-command invoke --resource-group rg-abarzi-sch --name vm-web1-demo --command-id RunPowerShellScript --scripts "Restart-Service W3SVC"
+
