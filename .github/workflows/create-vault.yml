@@ -23,6 +23,15 @@ jobs:
             --location swedencentral \
             --sku standard
 
+      - name: Assign Contributor role to SP on Key Vault
+        run: |
+          SP_ID=$(jq -r '.clientId' <<< "${{ secrets.AZURE_CREDENTIALS }}")
+          SUB_ID=$(az account show --query id -o tsv)
+          az role assignment create \
+            --assignee $SP_ID \
+            --role "Contributor" \
+            --scope /subscriptions/$SUB_ID/resourceGroups/rg-abarzi-sch/providers/Microsoft.KeyVault/vaults/kv-admin6-swc
+
       - name: Add Secret to Key Vault
         run: |
           az keyvault secret set \
