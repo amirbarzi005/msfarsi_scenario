@@ -18,7 +18,7 @@ jobs:
       - name: Create Key Vault
         run: |
           az keyvault create \
-            --name kv-admin6-swc \
+            --name kv-admin7-swc \
             --resource-group rg-abarzi-sch \
             --location swedencentral \
             --sku standard
@@ -33,11 +33,11 @@ jobs:
           az role assignment create \
             --assignee $SP_ID \
             --role "Contributor" \
-            --scope /subscriptions/$SUB_ID/resourceGroups/rg-abarzi-sch/providers/Microsoft.KeyVault/vaults/kv-admin6-swc
+            --scope /subscriptions/$SUB_ID/resourceGroups/rg-abarzi-sch/providers/Microsoft.KeyVault/vaults/kv-admin7-swc
 
       - name: Add Secret to Key Vault
         run: |
           az keyvault secret set \
-            --vault-name kv-admin6-swc \
+            --vault-name kv-admin7-swc \
             --name amir \
             --value ${{ secrets.AMIR_SECRET }}
