@@ -24,8 +24,11 @@ jobs:
             --sku standard
 
       - name: Assign Contributor role to SP on Key Vault
+        shell: bash
+        env:
+          AZ_CREDS: ${{ secrets.AZURE_CREDENTIALS }}
         run: |
-          SP_ID=$(jq -r '.clientId' <<< "${{ secrets.AZURE_CREDENTIALS }}")
+          SP_ID=$(echo "$AZ_CREDS" | jq -r '.clientId')
           SUB_ID=$(az account show --query id -o tsv)
           az role assignment create \
             --assignee $SP_ID \
