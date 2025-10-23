@@ -1,0 +1,31 @@
+name: Create Azure Key Vault and Secret
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-vault:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Create Key Vault
+        run: |
+          az keyvault create \
+            --name kv-admin6-swc \
+            --resource-group rg-abarzi-sch \
+            --location swedencentral \
+            --sku standard
+
+      - name: Add Secret to Key Vault
+        run: |
+          az keyvault secret set \
+            --vault-name kv-admin6-swc \
+            --name amir \
+            --value ${{ secrets.AMIR_SECRET }}
